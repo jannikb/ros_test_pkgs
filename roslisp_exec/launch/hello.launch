@@ -1,0 +1,3 @@
+<launch>
+  <node name="roslisp_exec" pkg="roslisp_exec" type="exec" args="roslisp_exec hello.lisp" output="screen" />
+</launch>
