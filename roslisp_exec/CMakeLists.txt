@@ -7,7 +7,7 @@ catkin_package(
 )
 
 include_directories(
-${catkin_INCLUDE_DIRS} 
+${catkin_INCLUDE_DIRS}
 )
 
 macro(catkin_add_lisp_script _output _script)
@@ -16,7 +16,7 @@ macro(catkin_add_lisp_script _output _script)
   message("project_source ${PROJECT_SOURCE_DIR}, devel_prefix ${CATKIN_DEVEL_PREFIX}, project ${PROJECT_NAME}, asd ${CATKIN_PACKAGE_BIN_DESTINATION}")
 
   file(
-    WRITE ${_output} 
+    WRITE ${_output}
     "#!/bin/bash
 ROS_SBCL_PATH=`rospack find sbcl`
 export ROSLISP_PATH=`rospack find roslisp`
@@ -36,11 +36,6 @@ $SBCL --noinform --load $ROSLISP_PATH/scripts/roslisp-sbcl-init --script ${PROJE
   file(
     COPY ${_output}
     DESTINATION ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINATION}
-    FILE_PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ) 
+    FILE_PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ)
 
 endmacro(catkin_add_lisp_script)
-
-catkin_add_lisp_script(test_exe hello.lisp)
-
-
-
