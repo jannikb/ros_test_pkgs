@@ -1,8 +1,14 @@
 #!/usr/bin/env sh
-"true"; exec sbcl --noinform --end-runtime-options --no-userinit --disable-debugger --load `rospack find roslisp`/scripts/roslisp-sbcl-init --script "$0" "$@"
+"true"; exec /usr/bin/env sbcl --noinform --load `rospack find roslisp`/scripts/roslisp-sbcl-init --script "$0" "$@"
 
 (ros-load:load-system "roslisp" "roslisp")
 
-(roslisp:ros-info (example-script) "Hello world")
-(roslisp:ros-info (example-script) "Args: ~a" sb-ext:*posix-argv*)
+(in-package :roslisp)
+
+(with-ros-node ("talker")
+    (let ((i 0)
+            (pub (advertise "chatter" "std_msgs/String")))
+        (ros-info (talker) "Publishing on topic /chatter")
+        (loop-at-most-every .1
+            (publish-msg pub :data (format nil "foo ~a" (incf i))))))
 
